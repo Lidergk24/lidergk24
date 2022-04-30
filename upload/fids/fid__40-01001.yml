@@ -1,0 +1,13 @@
+<yml_catalog date="2022-04-29 13:04:46">
+  <offer id="40-01001">
+    <url>http://lider-gk24.ru/product/40-01001</url>
+    <price>138.88</price>
+    <name>Вантуз большой</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>a917b1f0-b22e-11e1-a824-e0cb4e34a945</categoryId>
+    <vendor>NoName</vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/aa/aabb56b9-f9af-11e2-ab8f-7446a0fe3124_4aa2ecab-afee-11e3-8bca-7446a0fe3124.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+</yml_catalog>

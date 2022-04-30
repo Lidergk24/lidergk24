@@ -1,0 +1,46 @@
+<yml_catalog date="2022-04-28 18:00:21">
+  <offer id="10-01005">
+    <url>http://lider-gk24.ru/product/10-01005</url>
+    <price>35934.2</price>
+    <name>Диспенсер для бумажных полотенец Tork H1 Elevation Matic 551000</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>ad37946e-d2c0-11e2-808f-7446a0fe3124</categoryId>
+    <vendor>Tork</vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/fb/fb295a22-c381-11e2-a0b3-7446a0fe3124_2499b4b7-8424-11e4-85f0-7446a0fe3124.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="10-01006">
+    <url>http://lider-gk24.ru/product/10-01006</url>
+    <price>45780.4</price>
+    <name>Диспенсер для бумажных полотенец Tork H1 Elevation Matic Intuition 551100</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>ad37946e-d2c0-11e2-808f-7446a0fe3124</categoryId>
+    <vendor>Tork</vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/ad/adac0c95-3b03-11e7-80cc-00155d0ae503_77f35ec7-04e2-11e8-80da-00155d0ae503.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="10-01008">
+    <url>http://lider-gk24.ru/product/10-01008</url>
+    <price>42241.7</price>
+    <name>Диспенсер для бумажных полотенец Tork H1 Elevation Matic Intuition 551108</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>ad37946e-d2c0-11e2-808f-7446a0fe3124</categoryId>
+    <vendor>Tork</vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/fb/fb295a20-c381-11e2-a0b3-7446a0fe3124_2499b4bb-8424-11e4-85f0-7446a0fe3124.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="10-01012">
+    <url>http://lider-gk24.ru/product/10-01012</url>
+    <price>22259.1</price>
+    <name>Диспенсер для бумажных полотенец Tork H2 Xpress Multifold 460004</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>ad37946e-d2c0-11e2-808f-7446a0fe3124</categoryId>
+    <vendor>Tork</vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/0d/0d6dd243-6099-11e6-80f8-f46d0499d05e_00f95fb0-e396-11e6-811b-f46d0499d05e.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+</yml_catalog>

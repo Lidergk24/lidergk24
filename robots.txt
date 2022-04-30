@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /cart
+Disallow: /cart/order
+Disallow: /template/
+Disallow: /user/login
+Disallow: /user/register
+
+Sitemap: https://lider-gk24.ru/sitemap

@@ -1,0 +1,9 @@
+.htaccess
+orders
+robots
+test79
+.bash_history
+file
+sql/
+**/*.sql
+**/*.log
