@@ -1,11 +1,12 @@
 <?php
 /**
- * Контроллер CartController
+ * Контроллер SiteController
  */
 class SiteController {
     
     // Главная страница
     public function actionIndex() {
+        //var_dump($_SESSION);
         $mainPageSEO = AdminClass::infoThisBizCat(242);
         $title = $mainPageSEO["4"];//'Одноразовая посуда и другие товары для сегмента HoReCa | «Лидер»';
         $description = $mainPageSEO["5"];//'Интернет-магазин предлагает купить одноразовую посуду, хозтовары и расходные материалы для бизнеса. Высокое качество и быстрая доставка гарантированы.';
