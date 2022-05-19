@@ -14,7 +14,7 @@
          </ul>
          <form enctype="multipart/form-data" method="POST" class="form-add-file form-admin-cabinet">
             <?php if(!empty($infoEndcat['cat_icon'])){ ?>
-            <span>Иконка категории:</span><img style="display: inline-block;" src="<?php echo $environment["base_url"]; ?>/template/images/icons/<?php echo $infoEndcat['cat_icon']; ?>">
+                <span>Иконка категории:</span><img style="display: inline-block;" src="<?php echo $environment["base_url"]; ?>/template/images/icons/<?php echo $infoEndcat['cat_icon']; ?>">
             <?php } ?>
             <input type="file" name="filename">
             <label>
@@ -35,24 +35,59 @@
             </script>
             <button class="btn btn_black" name="submit" type="submit">Добавить баннер</button>
             <br />
-            <label for="filters">
+
+         </form>
+
+         <form enctype="multipart/form-data" method="POST" class="form-conf-attr form-admin-cabinet">
+             <label for="filters">
                 <span class="form-group__title">Фильтры категории</span>
             </label>
             <div class="all-filters" name="filters">
-                <?php foreach($catFilters as $ind => $flt) : ?>
-                    <div class="filter-container draggable" draggable="true" data-order="<?=$ind?>" data-filter-id="<?=$flt[id]?>">
-                        <div name="order" class="count-cat" style="position: absolute;"><?=$ind+1?>.</div>
-                        <label class="filter"><?=$flt[attribute_name]?></label>
-                        <input class="filters" type="checkbox" checked />
+                <?php foreach($catFilters as $ind => $flt) : ?> 
+                    <div class="filter-container draggable" draggable="true" data-order="<?=$ind?>">
+                        <div name="order" data-filter-id="<?=$flt['attribute_id']?>" data-category="<?=$flt['cat_id']?>" class="count-cat" style="position: absolute;"><?=$ind+1?>.</div>
+                        <label class="filter-label"><?=$flt['attribute_name']?></label>
+                        <?php if ($flt['enabled'] != 0) : ?>
+                            <input class="filter-check" name="check" type="checkbox" checked="true" />
+                        <?php else : ?>
+                            <input class="filter-check" name="check" type="checkbox" />
+                        <?php endif ?>
                     </div>
                 <?php endforeach ?>
             </div>
-         </form>
+            <button class="btn btn_black" name="submit" type="submit">Сконфигурировать фильтры</button>
+            <?php print_r($catEnabledFilters)  ?>
+        </form>
       </div>
    </div>
 </main>
 <?php include ROOT . '/views/admin/Index/Footer.php'; ?>
 <script>
+ 
+$('.form-conf-attr').submit(function(e) {
+    e.preventDefault();
+    let $fltOrdersNumerate = $('.filter-container.draggable');
+    let $flts = $('.all-filters [name=order]'); 
+    let fltsCollection = {};
+    $($flts).each(function(index, item) {
+        //console.log($(this).first().find('.filter-check'));
+        $(this).parent().attr('data-order', $(this).eq(0).html());
+        console.log($(this).eq(0).html());
+        fltsCollection[index+1] = { cat : $(this).data('category'), filter : $(this).data('filter-id'), order : $(this).parent().data('order'), enabled : $(this).siblings('input.filter-check').is(':checked') ? '1' : '0' }
+    });
+    let attrCollection = JSON.stringify(fltsCollection);
+    $.ajax({
+        type: "POST",
+        url: "/admin/updateCatFilters",
+        format: "JSON",
+        data: {filters: attrCollection},
+        success: function (data) {
+            console.log(data);
+            //location.reload();
+        }
+    });
+});
+
 const dragAndDrop = () => {
    const draggables = document.querySelectorAll('.draggable');
    const containers = document.querySelectorAll('.all-filters');

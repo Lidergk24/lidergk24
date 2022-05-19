@@ -359,14 +359,132 @@ class AdminClass
      * 
      * @return all filters array
      */
-    public static function getAllCatFilters()
+    public static function getAllCatFilters($cat) : ?array
     {
-        $db = Db::getConnection();
-        $sql = 'SELECT id, attribute_name FROM product_attributes';
-        $result = $db->prepare($sql);
-        $result->execute();
-        $filters = $result->fetchAll(PDO::FETCH_ASSOC);
-        return $filters;
+        try {
+            $db = Db::getConnection();
+            $sql = 'SELECT cf.*, pa.attribute_name FROM cat_filters cf join product_attributes pa ON cf.attribute_id = pa.id WHERE cf.cat_id = :cat_id ORDER BY cf.`order` ASC';
+            $result = $db->prepare($sql);
+            $result->bindParam(':cat_id', $cat, PDO::PARAM_STR);
+            $result->execute();
+            $filters = $result->fetchAll(PDO::FETCH_ASSOC);
+            return $filters;
+        }
+        catch (Throwable $t) { die("Application called exception: { $t->getMessage(); }"); }
+    }
+
+     /**
+     * Get enabled filters for product categories
+     * 
+     * @param $cat is single cat indenify
+     * @return filter's status array
+     */
+    public static function getEnabledCatFilters($cat) : ?array
+    {
+        try {
+            $db = Db::getConnection();
+            //var_dump($_POST['filters']);
+            $sql = 'SELECT * FROM cat_filters WHERE `cat_id` = :cat ORDER BY `order` ASC'; //'SELECT cf.cat_id, cf.attribute_id, cf.enabled FROM cat_filters cf JOIN Category c ON cf.cat_id=c.id WHERE c.cat_code = :cat';
+            // SELECT cf.*, pa.attribute_name FROM cat_filters cf join product_attributes pa ON cf.attribute_id = pa.id WHERE cf.cat_id = 1 ORDER BY cf.`order` DESC
+            $result = $db->prepare($sql);
+            $result->bindParam(':cat', $cat, PDO::PARAM_STR);
+            $result->execute();
+            //$filters = $result->fetchAll(PDO::FETCH_ORI_ABS);
+            $filters = [];
+            foreach($result->fetchAll(PDO::FETCH_ASSOC) as $attr)
+                $filters['status'][$attr['attribute_id']] = $attr['enabled'];
+                if (!isset($filters['cat_id'])) $filters['cat_id'] = $attr['cat_id'];
+            return $filters;
+        }
+        catch (Throwable $t) { die ("Application called exception: { $t->getMessage(); }"); }
+    }
+
+    /**
+     *  Set filter configuration for categories
+     * 
+     * @property integer $cat_id
+     * @property integer $attribute_id
+     * @property integer $order
+     * @property integer $enabled
+     * 
+     * @param array $attrFlts list of attribute statuses that need to be saved
+     */
+    public static function setCatFiltersStats(array $attrFlts)
+    {
+        try 
+        {
+            $db = Db::getConnection();
+            $sql = '';
+            foreach ($attrFlts as $catfilter) {
+                /*var_dump($catfilter[enabled]);*/
+                $sql .= "UPDATE cat_filters SET `order` = :order, `enabled` = :enabled where `cat_id` = :cat_id and `attribute_id` = :attribute_id;"; 
+                $updt = $db->prepare($sql);
+                $updt->bindParam(':cat_id', $catfilter[cat], PDO::PARAM_INT);
+                $updt->bindParam(':attribute_id', $catfilter[filter], PDO::PARAM_INT);
+                $updt->bindParam(':order', $catfilter[order], PDO::PARAM_INT);
+                $updt->bindParam(':enabled', $catfilter[enabled], PDO::PARAM_INT);
+                $res = $updt->execute();
+                //echo $res;
+            }
+            //var_dump($sql);
+            
+        }
+        catch (Throwable $t) {
+            print "Application called exception: {$t->getMessage()}";
+        }
+    }
+    
+     /**
+     *  Set filter configuration for categories
+     * 
+     * @property integer $cat_id
+     * @property integer $attribute_id
+     * @property integer $order
+     * @property integer $enabled
+     * 
+     * @param array $attrFlts list of attribute statuses that need to be saved
+     */
+    public static function setCatFiltersStatsMSI(array $attrFlts)
+    {
+        try 
+        {
+            $paramsPath = $_SERVER['DOCUMENT_ROOT'] . '/config/db_params.php';
+            $params = include($paramsPath);
+            $con = new mysqli($params['host'], $params['user'], $params['password'], $params['dbname']); 
+            $sql = '';
+            foreach ($attrFlts as $catfilter) {
+                /*var_dump($catfilter[enabled]);*/
+                $sql .= "UPDATE cat_filters SET `order` = $catfilter[order], `enabled` = $catfilter[enabled] where `cat_id` = $catfilter[cat] and `attribute_id` = $catfilter[filter];"; 
+                //echo $sql . '<br />';
+            }
+            $res = mysqli_query($con, $sql);
+            echo $res;
+        }
+        catch (Throwable $t) {
+            print "Application called exception: {$t->getMessage()}";
+        }
+    }
+
+    /**
+     * Get idenify of category by cat_code
+     * 
+     * @return integer id
+     */
+    public static function getCatIdByGUID($guid) : ?string
+    {
+        try 
+        {
+            $db = Db::getConnection();
+            $sql = 'SELECT distinct id FROM Category WHERE cat_code =:guid'; 
+            $result = $db->prepare($sql);
+            $result->bindParam(':guid', $guid, PDO::PARAM_STR);
+            $result->execute();
+            $id = $result->fetch(PDO::FETCH_NUM);
+            return $id[0];
+        }
+        catch (Throwable $t) {
+            print "Application called exception: {$t->getMessage()}";
+        }
     }
     
     public static function makeNewDiscountGroup($grop, $subgroup, $part_num, $amount, $condition, $percent, $rubles ) {

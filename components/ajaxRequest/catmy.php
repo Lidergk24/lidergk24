@@ -9,7 +9,6 @@ $params = include($paramsPath);
 $con = new mysqli($params['host'],$params['user'],$params['password'],$params['dbname']);  
 include '../disabledAtributes.php';
 switch ($cmd) {
-
   case 'content':
   case 'filter':
 	// Получаем код категории
@@ -44,8 +43,16 @@ switch ($cmd) {
 	$filter_begin = API_parse_number( @$_REQUEST['begin'] );
 	
 	// Базовая структура ответа на запрос 'filter'
-	$RES = (object) Array( 'status'=>'error', 'cid'=>'', 'count'=> 0, 'min_price'=>0, 'max_price'=>0, 'filters'=>Array() );
-	
+	$fltrArr = [];
+	$RES = (object) Array( 'status'=>'error', 'cid'=>'', 'count'=>0, 'min_price'=>0, 'max_price'=>0, 'filters'=>Array() );
+	$cat_id = mysqli_query($con, "select distinct id from Category where cat_code='$cid';");
+	$catF = mysqli_query($con, "select pav.`code`, cf.`order` from cat_filters cf join product_attributes_values pav on cf.attribute_id=pav.attribute_id where cat_id=(select c.id from Product_category pc join Category c on c.cat_name=pc.cat_parent where pc.`cat_slug`='$cat_slug') and `enabled`=1 order by cf.`order` asc");
+	while ($row = mysqli_fetch_assoc($catF)) {
+        $fltrArr[$row['code']] = $row['order'];
+    }
+    $fkeys = array_keys($fltrArr);
+	$f = json_encode(array_keys($fltrArr));
+    file_put_contents('f.txt', $f);
 	if ($cid) {
 		$RES->status = 'success';
 		$RES->cid = $cid;
@@ -53,6 +60,8 @@ switch ($cmd) {
 		// Получаем полный список атрибутов
 		$ATTR = Array();
 		$q = mysqli_query($con, "select * from Product_atributs");
+		//$q = mysqli_query($con, "select pa.id, pa.attribute_name, pav.attr_value_name from cat_filters cf join product_attributes pa on cf.attribute_id=pa.id join product_attributes_values pav on pa.id=pav.attribute_id where cf.cat_id='$cat_id' and cf.enabled>0 order by cf.order");
+		//foreach ($q as $next) $ATTR[$next['id']] = $next;
 		foreach ($q as $next) $ATTR[$next['atributId']] = $next;
 		
 		// Задаём порядок сортировки
@@ -82,25 +91,27 @@ switch ($cmd) {
 	    //$productTable = $is_custom ? "ProductCustom" : "Product";
 		$productTable = "Product";
 		$q = mysqli_query($con, "select * from $productTable where product_category='$cid' and product_price > 0 $sort_order;");
+		$filtersForOrder = [];
 		foreach ($q as $next) {
-
 	    	$next['product_price'] = Product::getUserPrice($next);
 			$PROD[$next['product_code']]['q'] = $next;
 			$pcnt++;
 			if ($next['product_atributs']) {
+			    foreach($ATTR as $attrs)
+			        $PROD[$next['product_code']][$attrs['attribute_name']] = $attrs['attr_value_name'];
 				$AList = explode( ';', $next['product_atributs'] );
 				$AList = array_unique($AList);
 				foreach ($AList as $next_attr) {
 					$APair = $next_attr ? explode( ':', $next_attr ) : Array();
-					if ( count($APair) == 2 ) {
+					if ( count($APair) == 2 and in_array($APair[1], $fkeys) ) {
 						$tcode = $APair[0];
 						$vcode = $APair[1];
-					
 						if ( isset($ATTR[$vcode]) ) {		// Пропускаем не существующие и ошибочные атрибуты
 							$attribute = $ATTR[$vcode];
 							if ( !isset($FILTER[$tcode]) ) $FILTER[$tcode] = Array( $attribute['atributTitle'], Array(), 0 );
 							$FILTER[$tcode][2]++;		// Считаем общее число значений
 							if ( !isset($FILTER[$tcode][1][$vcode]) ) $FILTER[$tcode][1][$vcode] = Array( $attribute['atributValue'], Array() );
+							$filtersForOrder[] = $attribute['atributValue'];
 							$FILTER[$tcode][1][$vcode][1][] = $next['product_code']; 
 
 							// Сохраняем значения атрибутов у товаров
@@ -118,6 +129,12 @@ switch ($cmd) {
 			$RES->min_price = $RES->min_price < $next['product_price'] ? $RES->min_price : $next['product_price'];
 			$RES->max_price = $RES->max_price > $next['product_price'] ? $RES->max_price : $next['product_price'];
 		}
+
+
+    	$f = json_encode($FILTER);
+        file_put_contents('filters.txt', $f);
+
+
 
 		// Отбираем товары, подходяшие под текущий фильтр
 		$PSHOW = Array(); $PUSED = Array();
@@ -141,11 +158,15 @@ switch ($cmd) {
 			$PUSED[$pcode] = 1;
 		}
 		
+		
+		
+		
+		
 		// Подсчитываем количества товаров в вариантах фильтров		
 		foreach ($FILTER as $tcode => $next) {	
 			// Пропускаем атрибуты, у которых только одно значение, имеющееся у всех товаров и атрибуты из списка исключений
 		    $skipped = in_array ($next[0], $DISABLED_ATTRIBUTES) || in_array ($next[0], $DISABLED_ATTRIBUTES_SLUG[$cat_slug]);
-			if (!$skipped) {
+			if (/*!$skipped*/true) {
 				$NEW = (object) Array( 'id'=>$tcode, 'title'=>$next[0], 'values'=>Array() );
 				foreach ($next[1] as $vcode => $next_val) {
 					// Вычисляем отобранное количество товаров для каждого варианта
@@ -159,10 +180,15 @@ switch ($cmd) {
 		// Общее число отобранных товаров
 		$RES->count = count( $PSHOW );
 	}
+	
+	
+	$filts = json_encode($RES);
+    file_put_contents('res.txt', $filts);
 
 	// Выводим данные для формирования фильтра
 	if ($cmd == 'filter') print json_encode($RES);
-
+	$res = json_encode($RES);
+    file_put_contents('res.txt', $res);
 	// Формируем список отобранных товаров
 	if ($cmd == 'content' && count($PSHOW)) {
 		foreach ($PSHOW as $idx=>$pcode) {
@@ -175,7 +201,7 @@ switch ($cmd) {
 //----------------------------------------------------------------------------------------------------
 		}
 	        if (count($PSHOW) > $filter_begin + $filter_count) { ?>
-           <div class="row"><a href="#" class="btn btn_border-red load-more" title="">Загрузить еще</a></div>
+                <div class="row"><a href="#" class="btn btn_border-red load-more" title="">Загрузить еще</a></div>
 	        <?php }
 	}
 	break;

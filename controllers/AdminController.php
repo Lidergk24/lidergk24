@@ -671,7 +671,8 @@ class AdminController extends AdminBase {
     {
         self::checkAdmin();
         $metaCat = explode("/", $_SERVER["REQUEST_URI"]);
-        $catFilters = AdminClass::getAllCatFilters();
+        $catFilters = AdminClass::getAllCatFilters(AdminClass::getCatIdByGUID($metaCat[3]));
+        // $catEnabledFilters = AdminClass::getEnabledCatFilters(AdminClass::getCatIdByGUID($metaCat[3]));
         $metaCatInfo = AdminClass::metaCat($metaCat[3]);
         
         if (isset($_POST['submit'])) {
@@ -686,6 +687,25 @@ class AdminController extends AdminBase {
         require_once (ROOT . '/views/admin/Category/Metacat.php');
         return true;
     }
+
+    public function actionUpdateCatFilters()
+    {
+        //var_dump($_POST['filters']);
+        try {
+            if (isset($_POST['filters'])) {
+                $filter_config = json_decode($_POST['filters'], true);
+                AdminClass::setCatFiltersStats($filter_config);
+                //var_dump($filter_config);
+                /*foreach($filter_config as $ind => $item) 
+                    foreach($item as $node) echo($item);*/
+            }
+        } catch (Throwable $t) {
+            die ("Applications called exception { $t->getMessage() }");
+        }
+        //var_dump($_POST['filters']);
+    }
+    
+
     public static function actionRenumerateBusinessCat() {
         self::checkAdmin();
         $ids = $_POST['ids'];
