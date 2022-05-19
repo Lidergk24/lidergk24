@@ -8,6 +8,7 @@ file.csv
 **/logs/
 file.csv
 upload/offers.xml
+upload/import.xml
 .gitconfig
 .git/
 lider-gk24.pub
@@ -17,3 +18,4 @@ robots.txt
 test79.php
 yandex_5be9db56354a24f9.html
 config/db_params.php
+.vscode/launch.json
