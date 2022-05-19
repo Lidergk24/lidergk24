@@ -108,16 +108,30 @@
                                     <input type="text" class="input_coupon" placeholder="Введите промокод" <?php if (User::isGuest()) {
                                                                                                                 echo "disabled ";
                                                                                                                 echo "title='Для использования необходимо авторизоваться'";
-                                                                                                            } ?>>
+                                                                                                            } 
+                                                                                                                elseif (User::checkUserForCoupon() === false) {
+                                                                                                                    echo "disabled ";
+                                                                                                                    echo "title='Промокод нельзя активировать'";
+                                                                                                                }
+                                                                                                            ?>>
                                     <span class="notification__promo bg-light__green">Купон применен!</span>
                                 </label>
                                 <button type="submit" class="btn btn_black inputCoupon" <?php if (User::isGuest()) {
                                                                                             echo "disabled ";
                                                                                             echo "title='Для использования необходимо авторизоваться'";
-                                                                                        } ?>>Применить</button>
+                                                                                        } 
+                                                                                            elseif (User::checkUserForCoupon() === false) {
+                                                                                                echo "disabled ";
+                                                                                                echo "title='Промокод нельзя активировать'";
+                                                                                            }
+                                                                                        ?>>Применить</button>
                                 <?php if (User::isGuest()) { ?>
                                     <span class="warning_coupon">Для применения промокода необходимо
                                         <a href="/user/login"> авторизоваться</a>
+                                    </span>
+                                <?php } ?>
+                                <?php if (User::checkUserForCoupon() === false) { ?>
+                                    <span class="warning_coupon">Промокод нельзя активировать
                                     </span>
                                 <?php } ?>
                             </form>
