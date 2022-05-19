@@ -1,0 +1,68 @@
+<yml_catalog date="2022-05-14 15:33:15">
+  <offer id="60-01003">
+    <url>http://lider-gk24.ru/product/60-01003</url>
+    <price>3.56</price>
+    <name>Гель для душа одноразовый Hotel 10 мл в саше 500 шт.</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>33eed7ef-f24f-11e8-80e1-00155d0ae503</categoryId>
+    <vendor></vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/38/38b31e53-a249-11e5-b128-7446a0fe3124_023169b5-4e97-11e6-80f1-f46d0499d05e.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="60-01002">
+    <url>http://lider-gk24.ru/product/60-01002</url>
+    <price>164.35</price>
+    <name>Крем для рук Бархатные ручки Питательный 80 мл</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>33eed7ef-f24f-11e8-80e1-00155d0ae503</categoryId>
+    <vendor>Бархатные ручки</vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/34/34fa0d5b-91e7-11e2-b9b0-5404a6b25ec1_0b714e38-b4a5-11e3-a179-7446a0fe3124.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="60-01006">
+    <url>http://lider-gk24.ru/product/60-01006</url>
+    <price>6.53</price>
+    <name>Мыло для рук Hotel флопак для отелей 13 г 500 шт.</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>33eed7ef-f24f-11e8-80e1-00155d0ae503</categoryId>
+    <vendor></vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/de/de2d8536-cbd5-11e5-a951-7446a0fe3124_4dde22e4-485a-11e6-80f1-f46d0499d05e.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="60-01009">
+    <url>http://lider-gk24.ru/product/60-01009</url>
+    <price>45.63</price>
+    <name>Крем для рук Harmony of body защитный 75 мл</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>33eed7ef-f24f-11e8-80e1-00155d0ae503</categoryId>
+    <vendor>Harmony of body</vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/88/88792a38-c594-11ea-80f1-00155d0ae503_ba81cf34-c5c2-11ea-80f1-00155d0ae503.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="60-01010">
+    <url>http://lider-gk24.ru/product/60-01010</url>
+    <price>3.56</price>
+    <name>Шампунь отельный Hotel 10 мл в саше 500 шт.</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>33eed7ef-f24f-11e8-80e1-00155d0ae503</categoryId>
+    <vendor></vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/a1/a1638c1b-5a23-11eb-80f8-00155d0ae503_6be50f26-5a2a-11eb-80f8-00155d0ae503.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+  <offer id="60-01004">
+    <url>http://lider-gk24.ru/product/60-01004</url>
+    <price>22.57</price>
+    <name>Набор для чистки зубов отельный Hotel (зубная щетка+ зубная паста тюбик) 150 шт.</name>
+    <currencyId>RUB</currencyId>
+    <categoryId>33eed7ef-f24f-11e8-80e1-00155d0ae503</categoryId>
+    <vendor></vendor>
+    <picture>https://lider-gk24.ru/upload/import_files/d8/d8592550-44f6-11e6-80f0-f46d0499d05e_b2b0a630-ee94-11e6-811e-f46d0499d05e.jpeg</picture>
+    <sales_notes>При заказе на сумму от 5000 рублей - бесплатная доставка!</sales_notes>
+    <delivery>true</delivery>
+  </offer>
+</yml_catalog>

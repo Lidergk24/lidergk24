@@ -132,12 +132,6 @@
 
 
 
-
-
-
-         <div class="maps__delivery shadow-50">
-            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A1e1b25c6e36febefb51722979fe23a787836b19e0dbfd3b94d00ee68014ce96d&amp;source=constructor" width="100%" height="500" frameborder="0"></iframe>
-         </div>
       </div>
    </div>
 </section>

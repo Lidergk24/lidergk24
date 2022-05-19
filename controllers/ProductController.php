@@ -29,6 +29,7 @@ class ProductController
         } else {
 
             $productP = Product::getProductById($productId);
+            //var_dump($productP);
             if ($productP != false) {
                 $product =   $productP;
             } else {

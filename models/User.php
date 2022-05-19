@@ -79,6 +79,17 @@ class User {
         }
         header("Location: /user/login");
     }
+    
+    /**
+     * 
+     * 
+     */
+    public static function checkUserForCoupon() {
+        if( @$_SESSION['user_data']['specialClientPrice'] === '' or @$_SESSION['user_data']['specialClientPrice'] === 'Выбрать')
+            return true;
+        else return false;
+    } 
+      
     /**
      * Проверяет является ли пользователь гостем
      * @return boolean <p>Результат выполнения метода</p>

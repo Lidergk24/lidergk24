@@ -8,12 +8,14 @@ class CartController {
     // Добавление купона
     public function actionCouponAjax() {
         
-        $new_coupon = trim(@$_REQUEST['coupon']);
-	    // Cохраняем купон
-	    Cart::addCoupon($new_coupon);
-	    // Выводим результаты расчёта
-	    print json_encode(Cart::Calculate());
-        return true;
+        if (User::checkUserForCoupon() === true) {
+            $new_coupon = trim(@$_REQUEST['coupon']);
+    	    // Cохраняем купон
+    	    Cart::addCoupon($new_coupon);
+    	    // Выводим результаты расчёта
+    	    print json_encode(Cart::Calculate());
+            return true;
+        } else return false;
     }
 
     // Добавление товара или изменение его количества
