@@ -363,7 +363,7 @@ class AdminClass
     {
         try {
             $db = Db::getConnection();
-            $sql = 'SELECT cf.*, pa.attribute_name FROM cat_filters cf join product_attributes pa ON cf.attribute_id = pa.id WHERE cf.cat_id = :cat_id ORDER BY cf.`order` ASC';
+            $sql = 'SELECT cf.*, pa.attribute_name FROM cat_filters cf join product_attributes pa ON cf.attribute_id = pa.id WHERE cf.cat_id = :cat_id ORDER BY pa.`attribute_name` ASC';
             $result = $db->prepare($sql);
             $result->bindParam(':cat_id', $cat, PDO::PARAM_STR);
             $result->execute();
